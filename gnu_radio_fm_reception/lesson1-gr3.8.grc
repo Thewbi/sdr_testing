@@ -51,7 +51,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [848, 20.0]
+    coordinate: [816, 12.0]
     rotation: 0
     state: true
 - name: bb_gain_db
@@ -72,7 +72,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1264, 20.0]
+    coordinate: [1280, 12.0]
     rotation: 0
     state: true
 - name: center_freq
@@ -129,7 +129,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1408, 20.0]
+    coordinate: [1432, 12.0]
     rotation: 0
     state: true
 - name: if_gain_db
@@ -144,13 +144,13 @@ blocks:
     start: '0'
     step: '1.0'
     stop: '100'
-    value: '1'
+    value: '50'
     widget: counter_slider
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1128, 20.0]
+    coordinate: [1128, 12.0]
     rotation: 0
     state: true
 - name: rf_gain_db
@@ -165,13 +165,13 @@ blocks:
     start: '0'
     step: '1.0'
     stop: '100'
-    value: '1'
+    value: '50'
     widget: counter_slider
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [992, 20.0]
+    coordinate: [968, 12.0]
     rotation: 0
     state: true
 - name: samp_rate
@@ -276,7 +276,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [504, 256.0]
+    coordinate: [544, 332.0]
     rotation: 0
     state: enabled
 - name: low_pass_filter_0
@@ -856,4 +856,4 @@ connections:
 
 metadata:
   file_format: 1
-  grc_version: 3.10.10.0
+  grc_version: 3.10.12.0
