@@ -1,9 +1,9 @@
 # Introduction
 
-The basic purpose of this test is to decode Bluetooth Low Energy advertisement packets using a HackRF or similar Software Defined Radio and gnuradio. This repository does not use the GNURadio Companion GUI but it executes a Python script on the command line. The solution works on Microsoft Windows 11.
+The basic purpose of this test is to decode Bluetooth Low Energy advertisement packets using a HackRF One or similar Software Defined Radio and gnuradio. This repository does not use the GNURadio Companion GUI but it executes a Python script on the command line. The solution works on Microsoft Windows 11.
 
 The original repository for sdr4iot-ble-rx is located here: https://github.com/Rtone/sdr4iot-ble-rx
-The original repository is created for gnuradio 3.7. Since gnuradion 3.7 is deprecated, the original repository is not of great use any more.
+The original repository is created for gnuradio 3.7. Since gnuradio 3.7 is deprecated, the original repository is not of great use any more.
 
 An up-to-date version is contained here: https://github.com/oldprogram/sdr4iot-ble-rx
 The updated fork works for gnuradio 3.10 on Microsoft Windows!
@@ -90,9 +90,25 @@ cd C:\Users\lapto\dev\gnuradio\sdr4iot-ble-rx
 python ./ble_dump.py -o tmp/dump1.pcap --iq-output tmp/iq_output.csv
 ```
 
-produces a subfolder called tmp. Within the tmp folder, there will be two
-files dump1.pcap and iq_output.csv.
+executes the python script. The python script starts to capture incoming
+advertisement packets on the first advertisement channel 37. After a certain
+amount of time it will switch to the next advertisement channel and capture
+packets there. This means, you should let the applicatio run for a couple of
+seconds before stopping it. If you stop it too early, it will probably not 
+have the chance to capture any packets.
+
+Be warned, the iq_output.csv is getting huge very, very quickly. I ran the 
+script for 30 seconds which resulted in a 2 GB iq_output.csv file!
+
+The script creates a subfolder called tmp acording to the command line parameters
+given above. Within the tmp folder, there will be two files dump1.pcap and iq_output.csv.
 
 The dump1.pcap file can be opened using Wireshark. Wireshark is a GUI which 
 can decode packages from many communication protocols including Bluetooth.
 
+A great way to generate advertisement packets is to install the Android app 
+called nRF Connect. Switch to the ADVERTISER tab and start the advertiser.
+The advertiser will blast all advertisement channels with packets advertising
+your phone. sdr4iot-ble-rx will capture these packets within seconds. That
+way, the iq_output.csv file stays relatively small. I managed to capture
+four advertisement packets and the iq_output.csv file has been 400 MB.
