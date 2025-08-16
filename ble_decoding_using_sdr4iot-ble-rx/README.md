@@ -803,7 +803,7 @@ On the receiver side, the GFSK modulated data is digitized by an ADC and then pr
 to be able to express frequency shift. A quadrature demod can then convert the IQ data into a real-valued sinusoidal
 curve of values which correctly represents the frequency shift.
 
-![GFSK](sample_graph.png "GNU Radio Graph for GFSK Mod and Demod")
+![GFSK](res/sample_graph.png "GNU Radio Graph for GFSK Mod and Demod")
 
 The next step is for the receiver to sample the sinusoidal wave at the exact positions, that will yield in the correct
 high and low values that the sender has anticipated for the receiver to receive!
