@@ -783,15 +783,12 @@ https://wiki.gnuradio.org/index.php/Guided_Tutorial_GNU_Radio_in_C%2B%2B
 
 
 
+# Decoding GFSK at the receiver
 
-# Mueller & Müller
+## The problem statement
 
-https://wiki.gnuradio.org/index.php/Symbol_Sync
-https://wirelesspi.com/mueller-and-muller-timing-synchronization-algorithm/
-https://www.gnuradio.org/grcon/grcon17/presentations/symbol_clock_recovery_and_improved_symbol_synchronization_blocks/Andy-Walls-Samples-to-Digital-Symbols.pdf
-https://www.mdpi.com/2079-9292/13/21/4218
+First, we need to learn what the actual problem is in order to understand the employed solutions.
 
-The problem statement:
 The frequency is nothing but a sinusoidal wave. Using FSK (Frequency Shift Keying) the sinus can be shifted 
 back and forth by a small amount. Based on the sampling, either a high or a low value is sampled on the sinus
 or any value in between the two peaks.
@@ -818,10 +815,31 @@ The next step is for the receiver to sample the sinusoidal wave at the exact pos
 high and low values that the sender has anticipated for the receiver to receive!
 
 When a receiver samples data on a frequency, then the frequency will have to be sampled 
-at the correct points in time so that the receives samples the values that the sender has transmitted.
+at the correct points in time so that the sampled data exactly matches the values that the sender has transmitted!
 
 The question is: How does the receiver even know how to sample the data? The sender and receiver do not
 share a common clock!
+
+With the knowledge of the transmitted source-data 0, 0, 0, 1, 1, 1, 0, 1, 1, it is actually possible for a
+human to see what the points to sample the incoming waveform are, so that the data sequence is sampled.
+
+The computerized receiver does not know 
+* what the source-data is
+* where to start to sample
+* which frequency to use to sample the data
+
+How can these three points be clarified?
+
+The answer is to by using clock recovery algorithms. A clock recovery algorithm is one that is able to
+learn a clock from the data itself. Once the algorithm has latched onto the data, the data can be 
+converted back to the symbols that the transmitted originally has sent to the receiver.
+
+## Mueller & Müller
+
+https://wiki.gnuradio.org/index.php/Symbol_Sync
+https://wirelesspi.com/mueller-and-muller-timing-synchronization-algorithm/
+https://www.gnuradio.org/grcon/grcon17/presentations/symbol_clock_recovery_and_improved_symbol_synchronization_blocks/Andy-Walls-Samples-to-Digital-Symbols.pdf
+https://www.mdpi.com/2079-9292/13/21/4218
 
 In this example, the Symbol Sync is fed a demodulated Frequency-Shift Keying (FSK) signal and produces soft data bits. 
 A Binary Slicer block can then be used to turn these into hard zeros or ones.
