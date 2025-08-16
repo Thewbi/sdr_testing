@@ -805,6 +805,15 @@ curve of values which correctly represents the frequency shift.
 
 ![GFSK](res/sample_graph.png "GNU Radio Graph for GFSK Mod and Demod")
 
+In the graph above, a sample data sample of 0, 0, 0, 1, 1, 1, 0, 1, 1 is GFSK modulated by the sender.
+This data is output as IQ samples by the GFSK Mod block. It is transmitted over the air using an SDR and
+received by the receiver (this sample graph only contains a offline model, there is no RF transmission).
+The receiver will use a GFSK demod block. For educational reasons, the GFSK Mod block was broken apart and
+it's inner content was rebuild using discrete blocks. First the Quadrature Demod is used to convert the
+complex IQ samples into a real valued sinusoidal form. The data is output using a QT GUI Time Sink here:
+
+![After Quadrature Demod](res/after_quadrature_demod.png "GNU Radio Graph Data after Quadrature Demod")
+
 The next step is for the receiver to sample the sinusoidal wave at the exact positions, that will yield in the correct
 high and low values that the sender has anticipated for the receiver to receive!
 
