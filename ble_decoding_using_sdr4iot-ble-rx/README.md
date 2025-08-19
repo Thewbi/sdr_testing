@@ -821,18 +821,24 @@ The question is: How does the receiver even know how to sample the data? The sen
 share a common clock!
 
 With the knowledge of the transmitted source-data 0, 0, 0, 1, 1, 1, 0, 1, 1, it is actually possible for a
-human to see what the points to sample the incoming waveform are, so that the data sequence is sampled.
+human to identify the points to sample the incoming waveform at, in order to retrieve the original data from
+the waveform. Try it: find three low values followed by three high values followed by a single low value followed
+by two high values.
 
-The computerized receiver does not know 
-* what the source-data is
+The computerized receiver however does not know 
+* what the source-data is (So it cannot guess)
 * where to start to sample
 * which frequency to use to sample the data
 
-How can these three points be clarified?
+How can these three missing parts of information be produced by the receiver?
 
-The answer is to by using clock recovery algorithms. A clock recovery algorithm is one that is able to
-learn a clock from the data itself. Once the algorithm has latched onto the data, the data can be 
-converted back to the symbols that the transmitted originally has sent to the receiver.
+The answer is to use one of the clock recovery algorithms. A clock recovery algorithm is one that is able to
+learn a clock from the data itself. Once the algorithm has return a clock description, the receiver can
+then latched onto the data using said clock. The data can then be converted back to the symbols that the 
+transmitted originally has sent to the receiver.
+
+A well known synchronization sequence of 10101010 patterns often times is used to give the clock synchronizer
+a chance to detect the correct clock.
 
 ## Mueller & Müller
 
@@ -840,6 +846,7 @@ https://wiki.gnuradio.org/index.php/Symbol_Sync
 https://wirelesspi.com/mueller-and-muller-timing-synchronization-algorithm/
 https://www.gnuradio.org/grcon/grcon17/presentations/symbol_clock_recovery_and_improved_symbol_synchronization_blocks/Andy-Walls-Samples-to-Digital-Symbols.pdf
 https://www.mdpi.com/2079-9292/13/21/4218
+https://www.digikey.de/de/articles/clock-and-data-recovery-plls-clean-re-clock-timing-signals-in-wireless-links?srsltid=AfmBOopqqQEtkaaTT-ghmVxKuc71ZvK1sWU1QdVQdGHb3qOGmDoHsFw0
 
 In this example, the Symbol Sync is fed a demodulated Frequency-Shift Keying (FSK) signal and produces soft data bits. 
 A Binary Slicer block can then be used to turn these into hard zeros or ones.
@@ -848,3 +855,6 @@ clock and data recovery (CDR)
 bit error rate (BER)
 phase detector (PD)
 Mueller–Muller Phase Detector (MMPD)
+Pulse Amplitude Modulation (PAM) 
+Timing Error Detectors (TED)
+Phase Locked Loop (PLL)

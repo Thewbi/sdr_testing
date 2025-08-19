@@ -177,7 +177,7 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: tmp/gfsk_demod.data
+    file: tmp/gfsk_demod.dat
     type: byte
     unbuffered: 'True'
     vlen: '1'
@@ -195,7 +195,7 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: tmp/gfsk_demod_custom.data
+    file: tmp/gfsk_demod_custom.dat
     type: byte
     unbuffered: 'True'
     vlen: '1'
@@ -213,7 +213,7 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: tmp/quadrature_demod_output.data
+    file: tmp/quadrature_demod_output.dat
     type: float
     unbuffered: 'True'
     vlen: '1'
@@ -231,7 +231,7 @@ blocks:
     alias: ''
     append: 'False'
     comment: ''
-    file: tmp/symbol_sink_output.data
+    file: tmp/symbol_sink_output.dat
     type: float
     unbuffered: 'True'
     vlen: '1'
