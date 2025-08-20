@@ -795,9 +795,17 @@ Looking at the graph res/gfsk_test_graph_discrete_blocks.grc which is originally
 
 The parameters matter! Quadrature Demod Gain = 6.3662 and Symbol Sync Samples per Symbol = 10. The exploded Symbol Sync uses Mueller and Müller as CDR (Clock and Data Recovery). The Binary Slicer converts the recovered signal peaks from 1 and -1 to bits (1 and 0). The Unpacked to Packed block combines bits into bytes. The bytes are then piped into the ZMQ (Zero Message Queueing) Sink which provides them via a socket on the local operating system loopback adapter. A further python script ble_dump.py can connect to the socket and detect Advertisement packets in the datastream and decode them to usable data.
 
-Here is an advertisement packet which was detected in the data stream.
+Here is an advertisement packet which was detected in the data stream using the exploded GFSK graph above.
 
 ![CapturedAdvertisement](res/CapturedAdvertisement.png "Advertisement Packet in the DataStream.")
+
+The advertisement packet is best described by the Bluetooth Low Energy specification but there is plenty material on the net that presents the data. One such source is: https://beaujeant.github.io/resources/publications/ble.pdf. On page 20, an advertisement packet structure is displayed.
+
+An advertisement packet starts with a preamble which is the binary pattern 10101010 or 0xAA in hex. The advertisement preamble is followed by the four byte broadcast address which is the fixed address 0x8E89BED6. In the data stream the bytes are reordered, so you have to look for 0xD6BE898E. Every advertisement packet contains the broadcast address since this is the destination address and advertisement packets are broadcast and every BLE device can decide to listen to broadcast packets. (The sender address is contained in the Payload maybe?!?).
+
+The preamble byte and the destination address are not further encoded. The payload follows the preamble and broadcast address and is encoded using the whitening process. The receiver needs to use the dewhitening process to gain back the original payload. Whitening is a process to get rid of large sequences of 1s or 0s. I am not sure why large sequences are detrimental but my guess is that the CDR techniques will not be able to keep synced when there is only a single symbol sent instead of ones and zeroes. At the end of the packet, there is a CRC code.
+
+A word about preambles. When learning about BLE, there is a lot of material that mentions preambles. BLE unfortunately uses different preambles for different types of packets! You need to be very careful when detecting packets and look for the right preambles. For now, we will only detect advertisements and the preamble is therfore 0xAA.
 
 ## The problem statement for CDR (Clock and Data Recovery)
 
