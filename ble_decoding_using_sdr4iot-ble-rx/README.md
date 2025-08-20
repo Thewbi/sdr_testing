@@ -793,6 +793,30 @@ Looking at the graph res/gfsk_test_graph_discrete_blocks.grc which is originally
 
 ![GFSK_Demod_Explosion](res/GFSKDemod_Discrete_Blocks.png "GFSK demod block disassembed into concrete blocks.")
 
+The RTS-SDR block is documented here:
+
+See the OsmoSDR project page for more detailed documentation:
+* http://sdr.osmocom.org/trac/wiki/GrOsmoSDR
+* http://sdr.osmocom.org/trac/wiki/rtl-sdr
+* http://sdr.osmocom.org/trac/
+
+The RTL-SDR source is configured to expect a connected HackRF One SDR (https://greatscottgadgets.com/hackrf/). The HackRF Once is not the only SDR that will work in this situation (PlutoSDR, RedPittaya, BladeRF, LimeSDR, ...) but the HackRF One is tested working and it works perfectly every time so I love it a lot and can recommend it.
+
+The RTS-SDR source will output IQ samples very, very quickly. The HackRF One outputs pairs of I and Q signals whereas it uses a byte for the I and a byte for the Q sample. Then the next samples starts right after. Because there is a flood of samples, a Head block (https://wiki.gnuradio.org/index.php/Head) is used which just cuts of the stream of data after a configured amount of samples! This means the example graph is not a general graph but only usable for testing in the setup shown above.
+
+Next is a Simple Squelch block (https://wiki.gnuradio.org/index.php/Simple_Squelch). Simple Squelch computes the average power of the incoming signal and then compares that value agains a threshold. Only if the average signal power is larger than the threshold will the samples be forwarded to the rest of the graph. This is basically having the effect of keeping whitenoise out of the rest of the graph and only let real packets pass.
+
+Next there is a Frequency Xlating FIR Filter. This filter acts as a low-pass filter. I think this is where the carrier frequency is removed from the signal and the signal is moved from the transmission band into base band which is the set of frequencies where the transmitter has created the original GFSK modulated signal in. Base band is where we can detect the digital data.
+
+The following Quadrature Demod block is the last block that has complex data as input (In GNU Radio, complex data is color coded using blue color. Float data is orange and bytes are purple). The Quadrature Demod block converts complex data to float data. The float data then describes a real-vauled signal meaning a real valued wave.
+
+The symbol sync takes a look at the real-valued wave, synchronizes / locks to the clock signal which is coded into the wave and samples the symbols at the correct location (clock ticks). A excellent writeup of the employed Mueller & Müller algorithm, an analysis of the theory and the implementation is: 
+
+* https://edfuentetaja.github.io/sdr/m_m_analysis/
+* https://edfuentetaja.github.io/sdr/m_m_gnu_radio_analysis/
+
+The original paper from Mueller and Müller is available here: https://2n3904.net/library/MM_Clock_Recovery.pdf
+
 The parameters matter! Quadrature Demod Gain = 6.3662 and Symbol Sync Samples per Symbol = 10. The exploded Symbol Sync uses Mueller and Müller as CDR (Clock and Data Recovery). The Binary Slicer converts the recovered signal peaks from 1 and -1 to bits (1 and 0). The Unpacked to Packed block combines bits into bytes. The bytes are then piped into the ZMQ (Zero Message Queueing) Sink which provides them via a socket on the local operating system loopback adapter. A further python script ble_dump.py can connect to the socket and detect Advertisement packets in the datastream and decode them to usable data.
 
 Here is an advertisement packet which was detected in the data stream using the exploded GFSK graph above.
