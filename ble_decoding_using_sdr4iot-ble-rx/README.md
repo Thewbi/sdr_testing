@@ -785,7 +785,21 @@ https://wiki.gnuradio.org/index.php/Guided_Tutorial_GNU_Radio_in_C%2B%2B
 
 # Decoding GFSK at the receiver
 
-## The problem statement
+## The GNU Radio GFSK Demod Block
+
+In GNU Radio, blocks can be defined as hierachical blocks which allows a hierarchical block to be constructed from simpler, more elementary blocks which are then daisy chained in line in order to combine them to create more complex functionality. The GFSK block is such a hierachical block. Looking at the source code for the GFSK Demod block (gnuradio\gr-digital\python\digital\gfsk.py), it is possible to learn which blocks are used to form the GFSK Demod block.
+
+Looking at the graph res/gfsk_test_graph_discrete_blocks.grc which is originally part of the https://github.com/oldprogram/sdr4iot-ble-rx repository, the graph shows the usage of the GFSK demod block (now disabled) and a explosion of the GFSK block into it's concrete blocks below the GFSK demod block.
+
+![GFSK_Demod_Explosion](res/GFSKDemod_Discrete_Blocks.png "GFSK demod block disassembed into concrete blocks.")
+
+The parameters matter! Quadrature Demod Gain = 6.3662 and Symbol Sync Samples per Symbol = 10. The exploded Symbol Sync uses Mueller and Müller as CDR (Clock and Data Recovery). The Binary Slicer converts the recovered signal peaks from 1 and -1 to bits (1 and 0). The Unpacked to Packed block combines bits into bytes. The bytes are then piped into the ZMQ (Zero Message Queueing) Sink which provides them via a socket on the local operating system loopback adapter. A further python script ble_dump.py can connect to the socket and detect Advertisement packets in the datastream and decode them to usable data.
+
+Here is an advertisement packet which was detected in the data stream.
+
+![CapturedAdvertisement](res/CapturedAdvertisement.png "Advertisement Packet in the DataStream.")
+
+## The problem statement for CDR (Clock and Data Recovery)
 
 First, we need to learn what the actual problem is in order to understand the employed solutions.
 

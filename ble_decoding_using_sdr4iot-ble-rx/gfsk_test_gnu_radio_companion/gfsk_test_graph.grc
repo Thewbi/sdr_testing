@@ -75,7 +75,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [848, 684.0]
+    coordinate: [192, 724.0]
     rotation: 0
     state: enabled
 - name: blocks_delay_0
@@ -203,7 +203,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1648, 776.0]
+    coordinate: [1616, 792.0]
     rotation: 0
     state: enabled
 - name: blocks_file_sink_4_0_0
@@ -221,7 +221,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [624, 904.0]
+    coordinate: [528, 904.0]
     rotation: 0
     state: enabled
 - name: blocks_file_sink_4_0_0_0
@@ -239,7 +239,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1336, 864.0]
+    coordinate: [1240, 864.0]
     rotation: 0
     state: enabled
 - name: blocks_file_sink_5
@@ -378,7 +378,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1736, 656.0]
+    coordinate: [1488, 688.0]
     rotation: 0
     state: disabled
 - name: blocks_vector_source_x_0
@@ -413,7 +413,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1648, 704.0]
+    coordinate: [1240, 688.0]
     rotation: 0
     state: enabled
 - name: digital_chunks_to_symbols_xx_0
@@ -504,7 +504,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1128, 612.0]
+    coordinate: [760, 652.0]
     rotation: 0
     state: enabled
 - name: qtgui_time_sink_x_0
@@ -601,7 +601,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1744, 544.0]
+    coordinate: [1776, 544.0]
     rotation: 0
     state: disabled
 - name: qtgui_time_sink_x_0_0
@@ -698,7 +698,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [624, 800.0]
+    coordinate: [528, 800.0]
     rotation: 0
     state: enabled
 
